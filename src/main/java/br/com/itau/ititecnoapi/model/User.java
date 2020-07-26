@@ -10,7 +10,6 @@ public class User {
     @Id
     private String id;
     private String name;
-    @DBRef
     private Account account;
 
     public String getId() {
@@ -35,5 +34,14 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", account=" + account +
+                '}';
     }
 }
