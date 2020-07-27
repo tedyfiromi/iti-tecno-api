@@ -1,12 +1,11 @@
 package br.com.itau.ititecnoapi.controller;
 
-import br.com.itau.ititecnoapi.dto.AccountDTO;
 import br.com.itau.ititecnoapi.dto.UserDTO;
-import br.com.itau.ititecnoapi.model.Account;
 import br.com.itau.ititecnoapi.model.User;
 import br.com.itau.ititecnoapi.response.Response;
-import br.com.itau.ititecnoapi.service.AccountService;
 import br.com.itau.ititecnoapi.service.UserService;
+import br.com.itau.ititecnoapi.validator.UtilsValidator;
+import org.passay.RuleResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +28,17 @@ public class UserController {
         User user = new User();
 
         BeanUtils.copyProperties(userDTO, user);
-        User userObject = service.save(user);
 
-        if (userObject!=null) {
-            userResponse.setObject(userObject);
-            return ResponseEntity.ok(userResponse);
+        RuleResult status = service.valid(user.getAccount().getPassworld());
+        if(!status.isValid()) {
+            userResponse.setStatus(status.getDetails().toString());
+            return ResponseEntity.badRequest().body(userResponse);
         }
 
-        return ResponseEntity.badRequest().build();
+        User userObject = service.save(user);
+        userResponse.setObject(userObject);
+
+        return ResponseEntity.ok(userResponse);
+
     }
 }
