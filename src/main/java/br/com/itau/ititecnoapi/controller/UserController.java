@@ -4,6 +4,7 @@ import br.com.itau.ititecnoapi.dto.UserDTO;
 import br.com.itau.ititecnoapi.model.User;
 import br.com.itau.ititecnoapi.response.Response;
 import br.com.itau.ititecnoapi.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.passay.RuleResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @ApiOperation(value = "Save user data")
     @PostMapping
     public ResponseEntity<Response<User>> saveUser(@RequestBody UserDTO userDTO) {
 
