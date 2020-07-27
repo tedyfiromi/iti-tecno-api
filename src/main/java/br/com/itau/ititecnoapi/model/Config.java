@@ -1,6 +1,7 @@
 package br.com.itau.ititecnoapi.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Document
 @Data
 @AllArgsConstructor
+@Builder
 public class Config {
 
     private int minLength = 1;

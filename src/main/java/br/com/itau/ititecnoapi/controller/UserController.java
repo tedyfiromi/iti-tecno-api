@@ -4,7 +4,6 @@ import br.com.itau.ititecnoapi.dto.UserDTO;
 import br.com.itau.ititecnoapi.model.User;
 import br.com.itau.ititecnoapi.response.Response;
 import br.com.itau.ititecnoapi.service.UserService;
-import br.com.itau.ititecnoapi.validator.UtilsValidator;
 import org.passay.RuleResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    public ResponseEntity<Response<User>> saveUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<Response<User>> saveUser(@RequestBody UserDTO userDTO) {
 
         Response<User> userResponse = new Response<>();
         User user = new User();
@@ -30,7 +29,7 @@ public class UserController {
         BeanUtils.copyProperties(userDTO, user);
 
         RuleResult status = service.valid(user.getAccount().getPassworld());
-        if(!status.isValid()) {
+        if (!status.isValid()) {
             userResponse.setStatus(status.getDetails().toString());
             return ResponseEntity.badRequest().body(userResponse);
         }
